@@ -77,7 +77,7 @@ KOKORO_TO_LANG = {
 
 class Config:
     def __init__(self):
-        self.ui_language: str = "en"
+        self.ui_language: str = "en-us"
         self.last_language: str = SORTED_LANGUAGES[0]
         self.last_voice: str = ""
         self.last_folder: str = str(Path.home() / "Desktop")
