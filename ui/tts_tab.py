@@ -261,7 +261,7 @@ class TTSTab(ttk.Frame):
         frame.columnconfigure(0, weight=1)
         frame.columnconfigure(1, weight=1)
 
-        self.preview_btn = ttk.Button(frame, text="\u25b6 {t('preview')}", command=self._preview_audio)
+        self.preview_btn = ttk.Button(frame, text=f"\u25b6 {t('preview')}", command=self._preview_audio)
         self.preview_btn.grid(row=0, column=0, padx=(0, 6), pady=4, sticky="e")
 
         self.generate_btn = ttk.Button(frame, text=t("generate_audio"), command=self._on_generate_clicked)
