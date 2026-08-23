@@ -1,3 +1,35 @@
+"""
+Internationalization (i18n) module for Simpaudio.
+
+=============================================================================
+CONTRIBUTOR / TRANSLATOR GUIDE: How to add a new UI translation language
+=============================================================================
+
+To contribute a new UI language translation, follow these simple steps:
+
+1. LOCATE THE `STRINGS` DICTIONARY:
+   Find the `STRINGS` dictionary below containing locale string tables.
+
+2. ADD A NEW LOCALE ENTRY:
+   Copy an existing locale block (e.g., "en-us" or "es"). Create a new key
+   using the standard ISO language code (e.g., "fr-fr", "de", "tr", "ja").
+
+3. TRANSLATE VALUES:
+    Translate the right-hand string values into your target language.
+    - CRITICAL: Do NOT modify the left-hand dictionary keys.
+    - CRITICAL: Preserve format string placeholders in curly braces!
+    Example: "Chars: {chars}  |  Words: {words}" -> "Carabato: {chars}  |  Palabras: {words}"
+
+4. REGISTER IN `LANG_MAP`:
+    Add your locale code and its human-readable display name to `LANG_MAP`.
+   Example:
+     "fr-fr": "Français"
+
+5. FALLBACK BEHAVIOR:
+   If a specific key is missing from your translation, the `t()` helper
+   automatically falls back to the English (US) string.
+"""
+
 from typing import Dict, Any
 
 STRINGS: Dict[str, Dict[str, str]] = {
@@ -449,6 +481,7 @@ STRINGS: Dict[str, Dict[str, str]] = {
 }
 _CURRENT_LANG = "en-us"
 
+# Map of standard locale codes to their human-readable language names in the UI dropdown
 LANG_MAP = {
     "en-us": "English (US)",
     "en-gb": "English (UK)",
@@ -461,18 +494,27 @@ LANG_MAP = {
 }
 
 def set_language(lang_code: str) -> None:
+    """Sets the active application locale code (e.g., 'en-us', 'es')."""
     global _CURRENT_LANG
     if lang_code in STRINGS:
         _CURRENT_LANG = lang_code
 
 
 def get_language() -> str:
+    """Returns the currently active application locale code."""
     return _CURRENT_LANG
 
 def get_available_languages() -> Dict[str, str]:
+    """Returns a copy of the available language locale mapping dict."""
     return LANG_MAP.copy()
 
 def t(key: str, **kwargs: Any) -> str:
+    """
+    Translates a given string key into the currently active UI language.
+    
+    If the key is missing from the active locale dictionary, it gracefully
+    falls back to the English (US) dictionary, or returns the key itself as last resort[cite: 25].
+    """
     lang_dict = STRINGS.get(_CURRENT_LANG, STRINGS["en-us"])
     template = lang_dict.get(key) or STRINGS["en-us"].get(key, key)
     if kwargs:

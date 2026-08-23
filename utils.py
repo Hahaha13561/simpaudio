@@ -1,3 +1,15 @@
+"""
+Utility functions, global path settings, TTS model catalog, and user configuration persistence.
+
+Note for Developers:
+-------------------
+Do not confuse the application UI Localization (`ui/i18n.py`) with the TTS Synthesis
+Language definitions (`LANGUAGES` dictionary in `utils.py`)
+
+- `ui/i18n.py`: Controls the display language of buttons, labels, and dialogs in Simpaudio UI.
+- `utils.py LANGUAGES`: Maps audio synthesis engines (Piper, Kokoro) to their supported model voices.
+"""
+
 import json
 from pathlib import Path
 
